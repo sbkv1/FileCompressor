@@ -1,5 +1,9 @@
 import os
+import os.path
 import webbrowser
+from pathlib import Path
+import requests
+import urllib.request
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from functions.PDFcompress import *
@@ -16,10 +20,12 @@ def get_message():
 
 def upload_static_file():
 	f = request.files['static_file']
-	#save_path = "https://filecompressor.samirpaul1.repl.co/uploads/"
-	#completeName = os.path.join(save_path, f.filename) 
+	# Trying to save file inside the resource directory
+	save_path = 'https://filecompressor.samirpaul1.repl.co/static/resource/file.pdf'
 	f.save(f.filename)
-	compress_file(str(f.filename), str(f.filename))
+	#os.rename(f.filename, save_path)
+	#compress_file(str(f.filename), str(f.filename))
+	
 	resp = {"filename": str(f.filename),
 			"success": True,
 			"response": "file saved!"}
